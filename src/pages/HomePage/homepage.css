@@ -1,0 +1,57 @@
+.home-img {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  height: 600px;
+  min-width: 300px; /*match splash screen image*/
+}
+
+.home-img > img {
+ margin-top: 10%;
+}
+
+.tagline{
+  color: black;
+  padding-bottom: 0;
+  margin-top: 0.7em;
+  text-align: center;
+}
+
+#start-btn {
+  border: 2px solid white;
+  background: rgb(173, 184, 209);
+  border-radius: 12px;
+  color: black;
+  padding: .9em;
+
+}
+
+#start-btn:hover, #start-btn:active {
+  border: 2px solid rgb(93, 113, 158);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*https://www.quackit.com/css/flexbox/tutorial/align_form_elements_with_flexbox.cfm*/

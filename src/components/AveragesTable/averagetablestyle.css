@@ -1,0 +1,12 @@
+.group-buttons-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding-right: 40px;
+}
+
+.group-buttons-div > * {
+  margin: 0 4px 0 4px;
+}

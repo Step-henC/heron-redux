@@ -1,0 +1,18 @@
+.button-button-submit {
+  background: #e19b62;
+  color: white;
+  margin-right: 2em;
+  padding: 0.45em;
+  border-radius: 0.4em;
+  border: none;
+}
+
+.button-button-submit:hover,
+.button-button-submit:active {
+  background: #6c82b7;
+  color: white;
+  scale: 1.1;
+  transition: 0.3s;
+  cursor: pointer;
+}
+

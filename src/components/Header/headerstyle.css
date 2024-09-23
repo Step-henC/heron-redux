@@ -1,0 +1,129 @@
+.principal-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: no-wrap;
+  height: 90px;
+  width: 100%;
+  min-width: 300px; /* match splash screen logo image*/
+  background: rgb(173, 184, 209);
+  z-index: 9999;
+}
+
+.principal-header > * {
+  margin: 1em;
+  text-align: center;
+}
+.heron-suite {
+  position: absolute;
+}
+@media only screen and (max-width: 990px) {
+  .nav-links {
+    display: none !important;
+  }
+
+
+}
+
+.nav-links > * {
+  margin: 1em;
+}
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.nav-links > a:link {
+  color: black;
+}
+.nav-links > a:visited {
+  color: black;
+}
+
+.quant-lk:hover {
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+
+.gly-lk:hover {
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+
+.dropdown-nav {
+  border: 1px solid white;
+  background: rgb(173, 184, 209);
+  padding: 0.5em;
+  width: 180px;
+  border-radius: 12px;
+  float: right;
+}
+
+.dropdown-nav:hover, .dropdown-nav:active {
+  text-decoration: underline;
+}
+
+.offcan-btn-icon {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+ .offcanvas-btn {
+  align-self: flex-end;
+  /* background: rgba(156, 175, 212, 0.7); */
+  padding: 0.7em;
+  border: none;
+  border-radius: 12px;
+}
+
+.offcanvas-btn:hover,
+.offcanvas-btn:active {
+  background-color: rgba(187, 199, 226);
+  transition: .3s;
+}
+
+a {
+  margin-top: 1em;
+  margin-bottom: 0;
+  text-decoration: none !important;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+li {
+  list-style: none;
+  padding: 0.5em;
+  width: 100%;
+  text-align: left;
+}
+
+li > a {
+  text-decoration: none;
+  color: black;
+}
+
+.list-link:hover {
+  text-decoration: underline;
+}
+.list-link1:hover {
+  text-decoration: underline;
+}
+.dropdown-nav-ofc {
+  background: white;
+  padding: 0.5em .5em 0.5em 0;
+  width: 180px;
+  text-align: left;
+  /*float: left;*/
+  border: none;
+}
+
+.dropdown-nav-ofc:hover, .dropdown-nav-ofc:active {
+text-decoration: underline;
+}
