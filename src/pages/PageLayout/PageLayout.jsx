@@ -14,6 +14,7 @@ import GlycoFormPage from '../GlycoFormPage/GlycoFormPage';
 import QuantChartsPage from '../QuantChartsPage/QuantChartsPage';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import GlycoChartsPage from '../GlycoChartsPage/GlycoChartsPage';
 
 const ContactPage = lazy(() => import('../ContactPage/ContactPage'))
 export default function PageLayout() {
@@ -34,6 +35,7 @@ export default function PageLayout() {
             <Route path="/glyco" element={<GlycoFormPage />} />
             <Route path="/contact" element={<Suspense fallback={<LoadingSpinner />} ><ContactPage /></Suspense>} />
             <Route exact path="/quant/charts" element={<QuantChartsPage />} />
+            <Route exact path='/glyco/charts' element={<GlycoChartsPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </ErrorBoundary>

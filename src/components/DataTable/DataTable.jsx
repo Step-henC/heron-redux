@@ -122,8 +122,6 @@ const CustomDataTable = memo( function CustomDataTable({tableData, progressPendi
     []
   );
 
-
-
   return (
     <DataTable 
     title="Table 1. Data Averages"

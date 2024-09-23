@@ -18,9 +18,9 @@ export default defineConfig({
     define: publicVars,
     include: [/[\\/]node_modules[\\/]/],
   },
-  performance: {
-    bundleAnalyze: {
+  performance: process.env.BUNDLE_ANALYZE ? {
+    bundleAnalyze:  {
       openAnalyzer: true
-    }
-  }
+    } 
+  } : {}
 });

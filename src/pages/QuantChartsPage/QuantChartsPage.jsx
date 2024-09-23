@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 
 export default function QuantChartsPage() {
   const [pdfLoading, setPdfLoading] = useState(false);
-  // const [tableData, setTableData] = useState([]);
   const [uniquePeptides, setUniquePeptides] = useState([]);
   const [worker, setWorker] = useState(null);
   const [tableData, setTableData] = useState([])
@@ -27,11 +26,13 @@ export default function QuantChartsPage() {
   const quantFormData = useSelector((state) => state.quantform);
 
   const settingTableData = (fileData, replicateNumber, outlierList) => {
+ 
     startTableDataTransition(() => {
       setTableData(quantMapper(
         fileData, replicateNumber, outlierList
       ))
     })
+   
   }
   let navigate = useNavigate();
 
@@ -100,12 +101,14 @@ export default function QuantChartsPage() {
       <div className={'data-table-div'}>
         <CustomDataTable
           tableData={tableData}
+          progressPending={isTableDataPending}
         />
       </div>
 
       <div className={'data-table-div'}>
         <AveragesTable
           groupData={tableData.filter((row) => row.RatioAvg !== undefined)}
+          progressPending={isTableDataPending}
         />
         </div>
     

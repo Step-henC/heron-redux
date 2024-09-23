@@ -12,16 +12,18 @@ import {
 } from 'redux-persist';
 import appSlice from './redux/appSlice';
 import quantformSlice from './redux/quantformSlice';
+import glycoFormSlice from './redux/glycoFormSlice';
 
 const persistConfig = {
   key: 'heron-file',
   storage: storageSession,
-  blacklist: ['app'],
+  blacklist: ['app', 'glycoform'],
 };
 
 const rootReducer = combineReducers({
   app: appSlice,
   quantform: quantformSlice,
+  glycoform: glycoFormSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

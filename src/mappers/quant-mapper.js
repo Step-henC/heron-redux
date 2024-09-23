@@ -1,5 +1,9 @@
-import { std } from "mathjs";
-
+import { std } from "mathjs"; //large module slows page load times, but necessary tradeoff
+//rsBuild what we are using is an abstraction layer of rspack (under the hood)
+// rspack has code splitting for specific vendors but rsbuild does not
+// future directions require investigating how to customize rspack for our rsbuild (with merge strategy or something)
+// alternatively could lazy load this export function
+// but comes with larger load times (network requests too) and not worth the tradeoff
 const parseFloatFromObjectCopy = (objCopy) => {
   const ratio = parseFloat(objCopy['Ratio To Standard'])
   const quant = parseFloat(objCopy?.Quantification.split(' ').at(0));
@@ -42,9 +46,9 @@ const processOutliersFromFileData = (fileArray, outlierList) => {
 }
 
 
-export function quantMapper(fileDataJson, replicateNum, userOutlierSamples) {
+export function quantMapper (fileDataJson, replicateNum, userOutlierSamples) {
 
-
+ 
     let tempSum = []; //for ratio group average
     let tempQuantSum = []; //for quantification group avg
     const replicateSet = replicateNum; //group size

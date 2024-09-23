@@ -118,7 +118,7 @@ export default function QuantFormPage() {
     }
 
     //if first two fields are good, check if the all samples have same replicate num
-    if (isAcceptableFormat && isFileProcessedSuccess && !isEmpty(quantFormData.fileData)) {
+    if (isAcceptableFormat && isFileProcessedSuccess ) {
       setIsLoading(true)
       //if all samples have replicate num, process data
       if (isBadSamplesPresent === false) {
