@@ -8,8 +8,7 @@ import { loadWorker } from './worker/worker-helper';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 import starterWorker from './worker/worker';
 
-import { useRef, useState, useEffect, useTransition, useMemo } from 'react';
-import generatePDF from 'react-to-pdf';
+import { useRef, useState, useEffect, useTransition } from 'react';
 import './quantchartspage.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -83,8 +82,15 @@ export default function QuantChartsPage() {
 
 
   const toPDF = () => {
-    setPdfLoading(true);
-    generatePDF(targetRef, {}).then(() => setPdfLoading(false));
+
+    // largest bundle dynamic import rspack better load times
+    // ideally move to backend logic but fine here now
+    import('react-to-pdf').then((generatePDF) => {
+      setPdfLoading(true);
+      generatePDF(targetRef, {}).then(() => setPdfLoading(false));
+
+    })
+  
   };
 
   return (

@@ -17,5 +17,10 @@ export default defineConfig({
   source: {
     define: publicVars,
     include: [/[\\/]node_modules[\\/]/],
+  },
+  performance: {
+    bundleAnalyze: {
+      openAnalyzer: true
+    }
   }
 });
