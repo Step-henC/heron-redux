@@ -13,9 +13,10 @@ export const validateQuantFile = (fileDataJsonArray, successCallBack, errorCallb
     return;
   }
 
-  const objectsWithBadKeys = fileDataJsonArray.filter((rowObject) => !isEqual(Object.keys(rowObject, EXPECTED_FIELD_NAMES)))
+  const objectsWithBadKeys = fileDataJsonArray.filter((rowObject) => isEqual(Object.keys(rowObject), EXPECTED_FIELD_NAMES))
 
    if(objectsWithBadKeys.length > 0){
+    console.log(objectsWithBadKeys)
     errorCallback()
     return;
    }

@@ -12,11 +12,15 @@ import { useRef, useState, useEffect, useTransition } from 'react';
 import './quantchartspage.css';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function QuantChartsPage() {
   const [pdfLoading, setPdfLoading] = useState(false);
   const [uniquePeptides, setUniquePeptides] = useState([]);
   const [worker, setWorker] = useState(null);
   const [tableData, setTableData] = useState([])
+  const [showErrorX, setShowErrorX] = useState(false);
+  const [showErrorY, setShowErrorY] = useState(false)
+  const [showData, setShowData] = useState(false)
   // two useTransitions are "batched" by React for now
   // but may not be batched in future releases
   // best practices suggesting placing transitions in individual components
@@ -83,14 +87,14 @@ export default function QuantChartsPage() {
 
 
   const toPDF = () => {
-
     // largest bundle dynamic import rspack better load times
     // ideally move to backend logic but fine here now
-    import('react-to-pdf').then((generatePDF) => {
-      setPdfLoading(true);
-      generatePDF(targetRef, {}).then(() => setPdfLoading(false));
-
+    setPdfLoading(true)
+    import('react-to-pdf').then((module) => {
+      console.log(module)
+      module.default(targetRef, {}).then(()=> setPdfLoading(false))
     })
+
   
   };
 
@@ -111,6 +115,48 @@ export default function QuantChartsPage() {
           progressPending={isTableDataPending}
         />
         </div>
+
+        <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+        }}
+      >
+        <button
+          className="button-button-hide"
+          onClick={() => 
+            setShowErrorY(!showErrorY)
+          
+        }
+        >
+          {showErrorY ? "Hide Quantification Error" : "Show Quantification Error"}
+        </button>
+
+        <button
+          className="button-button-hide"
+          onClick={() => 
+            setShowErrorX(!showErrorX)
+          
+        }
+        >
+          {showErrorX ? "Hide Ratio Error" : "Show Ratio Error"}
+        </button>
+      
+        <button
+          className="button-button-hide"
+          onClick={() => 
+            setShowData(!showData)
+          
+        }
+        >
+          {showData ? "Hide Data" : "Show Data"}
+        </button>
+
+        <button className="button-button-submit" onClick={toPDF}>
+          {pdfLoading ? "Loading" : "Export PDF"}
+        </button>
+      </div>
     
 
       <div className="line-chart-div" ref={targetRef}>
@@ -118,14 +164,14 @@ export default function QuantChartsPage() {
           uniquePeptides.map((peptideName) => (
             <LineCharts
               key={uniqueId()}
-              showData={true}
+              showData={showData}
               peptideName={peptideName}
               dataForLineGraph={tableData.filter(
                 (row) =>
                   row.RatioAvg !== undefined && row.Peptide === peptideName
               )}
-              showErrorX={true}
-              showErrorY={true}
+              showErrorX={showErrorX}
+              showErrorY={showErrorY}
             />
           ))
         ) : (
