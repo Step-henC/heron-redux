@@ -39,3 +39,30 @@
     width: 1.25em;    
   }
 }
+
+
+.button-button-hide {
+  background: #6c82b7;
+  color: white;
+  margin-right: 2em;
+  padding: 0.75em;
+  border-radius: 0.4em;
+  border: none;
+}
+
+.button-button-hide:hover,
+.button-button-hide:active {
+  background: #e19b62;
+  color: white;
+  scale: 1.1;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+
+
+.group-buttons-div > * {
+
+  margin-left: 2em;
+  /* margin-right: 0; */
+}
