@@ -83,7 +83,7 @@ export default function QuantFormPage() {
       complete: (results) =>
         validateQuantFile(
           results.data,
-          () => successValidateCallback(results.data),
+          (data) => successValidateCallback(data),
           () => errorValidateCallBack()
         ),
     });

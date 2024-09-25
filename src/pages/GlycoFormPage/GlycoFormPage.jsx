@@ -10,7 +10,7 @@ import {
 } from '../../utils/acceptablefileformat';
 import './glycopage.css'
 import { resetGlycoForm, setFileData, setIsFormFilled } from '../../redux/glycoFormSlice';
-import {validateGlycoFile} from './glycoPageUtils'
+import {parseFileDataInts, validateGlycoFile} from './glycoPageUtils'
 export default function GlycoFormPage() {
   const [isAcceptableFormat, setIsAcceptableFormat] = useState(true);
   const [isFileProcessedSuccess, setIsFileProcessedSuccess] = useState(true);
@@ -24,7 +24,7 @@ export default function GlycoFormPage() {
   const navigate = useNavigate();
 
   const successValidateCallback = (fileData) => {
-    dispatch(setFileData(fileData));
+    dispatch(setFileData(parseFileDataInts(fileData)));
     setIsFileProcessedSuccess(true)
   }
 
@@ -57,7 +57,7 @@ export default function GlycoFormPage() {
       error: () => setIsFileProcessedSuccess(false),
       complete: (results) => validateGlycoFile(
         results.data,
-        () => successValidateCallback(results.data),
+        (data) => successValidateCallback(data),
         () => errorValidateCallBack()
       )
     });

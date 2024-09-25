@@ -1,4 +1,4 @@
-import { isArray } from "lodash";
+import { isArray, isEqual } from "lodash";
 import { EXPECTED_FIELD_NAMES } from "../../utils/acceptablefileformat";
 export const validateQuantFile = (fileDataJsonArray, successCallBack, errorCallback) => {
  
@@ -13,14 +13,14 @@ export const validateQuantFile = (fileDataJsonArray, successCallBack, errorCallb
     return;
   }
 
-  const objectsWithBadKeys = fileDataJsonArray.filter((rowObject) => Object.keys(rowObject).some((k) => !EXPECTED_FIELD_NAMES.includes(k)))
+  const objectsWithBadKeys = fileDataJsonArray.filter((rowObject) => !isEqual(Object.keys(rowObject, EXPECTED_FIELD_NAMES)))
 
    if(objectsWithBadKeys.length > 0){
     errorCallback()
     return;
    }
 
- successCallBack()
+ successCallBack(fileDataJsonArray)
 
 }
 
