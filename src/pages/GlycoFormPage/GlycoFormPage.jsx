@@ -96,6 +96,9 @@ export default function GlycoFormPage() {
   }, [])
 
   return (
+    <div className='glyco-main'>
+   {isAnalyzeButtonDisabled && <LoadingSpinner />}
+   <h1 className='glyco-hd'>Glycosylation</h1>
     <form id="csv-elem" aria-label="form to upload and submit csv">
       <ul className="wrapper">
         <li className="form-row-title">
@@ -164,6 +167,7 @@ export default function GlycoFormPage() {
         </li>
       </ul>
     </form>
+    </div>
   );
 }
 

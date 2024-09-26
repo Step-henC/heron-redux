@@ -1,6 +1,5 @@
 import {store, persistor} from './store';
-
-jest.mock('./redux/quantFormSlice', () => ({}))
+jest.mock('./redux/quantformSlice', () => ({}))
 
 describe('store', () => {
 it('should be defined', () => {
