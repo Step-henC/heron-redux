@@ -1,3 +1,14 @@
+.glyco-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.glyco-hd {
+  height: 90px; /*same as header component */
+}
+
 
 small > strong,
 small > strong > a {

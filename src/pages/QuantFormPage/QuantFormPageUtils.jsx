@@ -13,13 +13,20 @@ export const validateQuantFile = (fileDataJsonArray, successCallBack, errorCallb
     return;
   }
 
-  const objectsWithBadKeys = fileDataJsonArray.filter((rowObject) => isEqual(Object.keys(rowObject), EXPECTED_FIELD_NAMES))
+    // all should have same row titles
+  // we will break at first one
+  const sortedExpectedFields = EXPECTED_FIELD_NAMES.sort();
 
-   if(objectsWithBadKeys.length > 0){
-    console.log(objectsWithBadKeys)
-    errorCallback()
-    return;
-   }
+  for (const row of fileDataJsonArray) {
+
+    const sortedRowTitles = Object.keys(row).sort();
+
+    if (isEqual(sortedRowTitles, sortedExpectedFields) === false) {
+      errorCallback();
+      return;
+    }
+  }
+
 
  successCallBack(fileDataJsonArray)
 

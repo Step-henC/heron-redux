@@ -175,9 +175,9 @@ export default function QuantFormPage() {
   }, []);
 
   return (
-    <>
+    <div className='quant-main'>
       {isLoading && <LoadingSpinner />}
-      <h1>Quantification</h1>
+      <h1 className='quant-hd'>Quantification</h1>
       <form id="csv-elem" aria-label="form to upload and submit csv">
         <ul className="wrapper">
           <li className="form-row-title">
@@ -234,7 +234,6 @@ export default function QuantFormPage() {
             </label>
             <select
               id="rep-num"
-              defaultValue={0}
               value={quantFormData.replicateNumber}
               onChange={(e) => handleTechnicalReplicate(e)}
             >
@@ -356,6 +355,6 @@ export default function QuantFormPage() {
           </li>
         </ul>
       </form>
-    </>
+    </div>
   );
 }

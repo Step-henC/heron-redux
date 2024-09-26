@@ -7,8 +7,7 @@ const mockSuccessCallback = jest.fn();
 describe('Quant Utils test', () => {
   it('Should parse file', () => {
     const csvString = `Peptide,Protein,Replicate,Ratio To Standard,Peptide Retention Time,Quantification,Peptide Peak Found Ratio
-    TDOIADKL,SN8SL protein (Pep. 1),20240205_Mega_IG_STD1Mix_1,0.9513,27.65,56.4313 fmol,0.9
-    `;
+    TDOIADKL,SN8SL protein (Pep. 1),20240205_Mega_IG_STD1Mix_1,0.9513,27.65,56.4313 fmol,0.9`;
 
     let resultFile;
 
