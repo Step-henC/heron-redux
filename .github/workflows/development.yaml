@@ -1,12 +1,12 @@
 name: Build and Test React Application
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ development ]
+    branches: [development]
   pull_request:
-    branches: [ development ]
+    branches: [development]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [15.x, 17.x, 18.x, 19.x]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -31,4 +31,3 @@ jobs:
           npm ci
           npm run build --if-present
           npm test
-      
