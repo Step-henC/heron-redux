@@ -1,6 +1,6 @@
 
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Papa from 'papaparse';
 import { useNavigate } from 'react-router-dom';
@@ -10,13 +10,15 @@ import {
 } from '../../utils/acceptablefileformat';
 import './glycopage.css'
 import { resetGlycoForm, setFileData, setIsFormFilled } from '../../redux/glycoFormSlice';
-import {parseFileDataInts, validateGlycoFile} from './glycoPageUtils'
+import {validateGlycoFile} from './glycoPageUtils'
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 export default function GlycoFormPage() {
   const [isAcceptableFormat, setIsAcceptableFormat] = useState(true);
   const [isFileProcessedSuccess, setIsFileProcessedSuccess] = useState(true);
   const [inputKey, setInputKey] = useState(Date.now);
   const [noFileMessage, setNoFileMessage] = useState(false);
   const [isAnalyzeButtonDisabled, setIsAnalyzeButtonDisabled] = useState(false);
+  const [isFormParsePending, startFormParseTransition] = useTransition();
   const glycoFormData = useSelector((state) => state.glycoform)
 
 
@@ -24,8 +26,10 @@ export default function GlycoFormPage() {
   const navigate = useNavigate();
 
   const successValidateCallback = (fileData) => {
-    dispatch(setFileData(parseFileDataInts(fileData)));
+    dispatch(setFileData(fileData));
     setIsFileProcessedSuccess(true)
+    setIsAcceptableFormat(true)
+    setNoFileMessage(false)
   }
 
   const dataIsValidNavigateToCharts = () => {
@@ -38,11 +42,22 @@ export default function GlycoFormPage() {
   };
 
   const errorValidateCallBack = () => {
+    dispatch(resetGlycoForm())
     setIsFileProcessedSuccess(false);
   };
 
+  const parseError = () => {
+    setIsFileProcessedSuccess(false)
+    setNoFileMessage(true)
+    dispatch(resetGlycoForm())
+  }
+
   const handleFile = (e) => {
     const uploadedFile = e.target.files[0];
+    if (uploadedFile === undefined){
+      dispatch(resetGlycoForm())
+      return;
+    }
 
     if (uploadedFile && !ACCEPTABLE_GLYCO_FORMATS.includes(uploadedFile.type)) {
         setIsAcceptableFormat(false);
@@ -51,16 +66,22 @@ export default function GlycoFormPage() {
         setIsAcceptableFormat(true);
       }
 
-    Papa.parse(uploadedFile, {
-      header: true,
-      skipEmptyLines: true,
-      error: () => setIsFileProcessedSuccess(false),
-      complete: (results) => validateGlycoFile(
-        results.data,
-        (data) => successValidateCallback(data),
-        () => errorValidateCallBack()
-      )
-    });
+
+
+      startFormParseTransition(() => {
+        Papa.parse(uploadedFile, {
+          header: true,
+          skipEmptyLines: true,
+          error: () => parseError(),
+          complete: (results) => validateGlycoFile(
+            results.data,
+            (data) => successValidateCallback(data),
+            () => errorValidateCallBack()
+          )
+        })
+
+      })
+ 
         //https://medium.com/how-to-react/how-to-parse-or-read-csv-files-in-reactjs-81e8ee4870b0
 
   };
@@ -72,18 +93,20 @@ export default function GlycoFormPage() {
 
     if (isEmpty(glycoFormData.fileData)) {
       setNoFileMessage(true);
+      
       return;
     }
 
     // final check then navigate
-    if (isAcceptableFormat && isFileProcessedSuccess) {
+    if (isAcceptableFormat && isFileProcessedSuccess && !noFileMessage) {
+
     
         dataIsValidNavigateToCharts()
     }
   };
 
   const handleCancel = () => {
-    dispatch(setFileData([]));
+    dispatch(resetGlycoForm());
     navigate('/');
   };
 
@@ -97,7 +120,7 @@ export default function GlycoFormPage() {
 
   return (
     <div className='glyco-main'>
-   {isAnalyzeButtonDisabled && <LoadingSpinner />}
+   {(isAnalyzeButtonDisabled || isFormParsePending) && <LoadingSpinner />}
    <h1 className='glyco-hd'>Glycosylation</h1>
     <form id="csv-elem" aria-label="form to upload and submit csv">
       <ul className="wrapper">

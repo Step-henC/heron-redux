@@ -46,6 +46,7 @@ export default function QuantFormPage() {
   const successValidateCallback = (fileData) => {
     dispatch(setFileData(fileData));
     setIsFileProcessedSuccess(true);
+    setNoFileMessage(false)
   };
 
   const errorValidateCallBack = () => {
@@ -65,7 +66,7 @@ export default function QuantFormPage() {
     const uploadedFile = e.target.files[0];
 
     if (uploadedFile === undefined) {
-      dispatch(setFileData([]));
+      dispatch(resetQuantForm());
       return;
     }
 

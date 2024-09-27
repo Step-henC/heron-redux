@@ -66,3 +66,15 @@
   margin-left: 2em;
   /* margin-right: 0; */
 }
+
+.export-err {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.export-err > p {
+  color: red;
+}

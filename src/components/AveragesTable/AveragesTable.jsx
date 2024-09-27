@@ -7,6 +7,7 @@ import './averagetablestyle.css'
 const AveragesTable = memo( function AveragesTable({ groupData, progressPending }) {
 
   const [selectedCol, setSelectedCol] = useState([]);
+  const [isExportError, setIsExportError] = useState(false)
   const paginationComponentOptions = {
     selectAllRowsItem: true,
     selectAllRowsItemText: 'All',
