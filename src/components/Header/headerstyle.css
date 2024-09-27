@@ -8,7 +8,7 @@
   height: 90px;
   width: 100%;
   min-width: 300px; /* match splash screen logo image*/
-  background: rgb(173, 184, 209);
+  background:  rgb(202, 210, 229);
   z-index: 9999;
 }
 

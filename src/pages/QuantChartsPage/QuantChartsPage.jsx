@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function QuantChartsPage() {
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [isPdfErr, setIsPdfErr] = useState(false)
   const [uniquePeptides, setUniquePeptides] = useState([]);
   const [worker, setWorker] = useState(null);
   const [tableData, setTableData] = useState([])
@@ -27,6 +28,7 @@ export default function QuantChartsPage() {
   // but I want chart components to simply render something and not handle too much state logic
   const [isTableDataPending, startTableDataTransition] = useTransition();
 
+  // useSelectors should be synchronous so no need to check for null, although anything can happen
   const quantFormData = useSelector((state) => state.quantform);
 
   const settingTableData = (fileData, replicateNumber, outlierList) => {
@@ -43,7 +45,7 @@ export default function QuantChartsPage() {
   const targetRef = useRef(null);
 
   useEffect(() => {
-    if (!quantFormData || quantFormData?.isFormFilled === false) {
+    if (quantFormData?.isFormFilled === false) {
       navigate('/quant');
       return;
     }
@@ -91,8 +93,12 @@ export default function QuantChartsPage() {
     // ideally move to backend logic but fine here now
     setPdfLoading(true)
     import('react-to-pdf').then((module) => {
-      console.log(module)
-      module.default(targetRef, {}).then(()=> setPdfLoading(false))
+      module.default(targetRef, {}).then(()=> setPdfLoading(false)).catch((err) => {
+        setPdfLoading(false);
+        setIsPdfErr(true)
+        // for troubleshooting
+        console.log(err)
+      })
     })
 
   
@@ -115,7 +121,10 @@ export default function QuantChartsPage() {
           progressPending={isTableDataPending}
         />
         </div>
-
+        {isPdfErr && <div className='export-err'>
+          <p>Error: Data cannot be exported to a PDF at this time. Please try again later. If the problem continues, please <a href='/contact'>Contact Us here.</a></p>
+        </div>
+}
         <div
         style={{
           display: "flex",
