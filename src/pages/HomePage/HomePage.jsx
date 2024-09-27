@@ -14,6 +14,10 @@ export default function HomePage() {
 
   const resizeJumpToTop = () => {
     const landingDiv = document.getElementsByClassName('home-img')[0];
+    // disable behavior on mobile devices
+    if (landingDiv.offsetWidth < 990) {
+      return;
+    }
     landingDiv.scrollIntoView({
       behavior: 'instant',
       inline: 'start',

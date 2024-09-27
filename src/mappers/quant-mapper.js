@@ -138,7 +138,6 @@ export function quantMapper (fileDataJson, replicateNum, userOutlierSamples) {
 
     if (outlier2DListOfRowGroupedByReplicate.length !== 0 ) {
       const outlierSamples = outlier2DListOfRowGroupedByReplicate;
-      console.log('outlier',outlierSamples)
       //if we have outliers
       //create a temp list
       for (
