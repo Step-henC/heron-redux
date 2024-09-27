@@ -2,8 +2,5 @@ import { getGlycoDataExcel } from "../../ApiService/GlycoApiService/glycoApiServ
 
 
 export const exportExcel = (tableData) => {
-  //api call here
-
-  getGlycoDataExcel(num)
-  console.log('export', tableData)
+  getGlycoDataExcel(tableData)
 }
