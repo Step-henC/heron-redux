@@ -12,13 +12,6 @@ if (!isArray(file)) {
   return;
 }
 
-if (file.length === 0 ){
-  errorCallBack()
-  return;
-}
-
-
-// TODO place this filter and parseInt function below in one loop
 const objectsWithBadKeys = file.filter((rowObject) =>  !isEqual(Object.keys(rowObject), EXPECTED_GLYCO_FIELDS))
 
 
