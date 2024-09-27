@@ -1,4 +1,4 @@
-name: Bug Report
+name: Heron Data Suite Bug Report
 description: File a bug report.
 title: "[Heron UI Bug]: "
 labels: ["bug", "triage"]

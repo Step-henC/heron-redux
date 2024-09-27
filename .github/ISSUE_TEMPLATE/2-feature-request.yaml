@@ -1,5 +1,5 @@
-name: Bug Report
-description: File a bug report.
+name: Heron Data Suite Feature Request
+description: File a feature request.
 title: "[Heron UI Feature]: "
 labels: ["feature", "new"]
 body:

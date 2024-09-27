@@ -1,5 +1,5 @@
-name: Bug Report
-description: File a bug report.
+name: Heron Data Suite Enhancement Request
+description: File an enhancement request.
 title: "[Heron UI Enhancement]: "
 labels: ["enhancement", "improve"]
 body:
