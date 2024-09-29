@@ -304,7 +304,7 @@ export default function QuantFormPage() {
                   <strong>
                     Names may include letters, numbers, underscores and hyphens.
                     Make sure there is a space after each comma.{' '}
-                    <a href="/">For more clarity, clck here</a>
+                    <a href="/quant-tutorial">For more clarity, click here</a>
                   </strong>
                 </small>
               )}
