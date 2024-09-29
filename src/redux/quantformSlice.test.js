@@ -5,7 +5,7 @@ import quantformSlice, {
   setReplicateNumber,
   resetQuantForm,
 } from './quantformSlice';
-import { convertBadSamplesToOutlierList } from '../pages/QuantFormPage/QuantFormPageUtils';
+import { convertBadSamplesToOutlierList } from '../pages/Quant/QuantFormPage/QuantFormPageUtils';
 
 const initialState = {
   isFormFilled: false,

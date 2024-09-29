@@ -1,0 +1,36 @@
+FROM node:16-alpine
+
+USER node
+
+# need to make a directory to prevent permissions issues
+# workdir by default will create a dir and set ownership to root
+RUN mkdir -p /home/node/app
+WORKDIR /home/node/app
+
+#chown sets ownership of files
+COPY --chown=node:node ./package.json ./
+RUN npm install
+
+# may not need copy code with docker compose/volumes
+# but keep it just in case
+COPY  --chown=node:node ./ ./
+
+CMD ["npm", "start"]
+
+# Docker will build Dockerfile.dev
+# by specifying "docker build -t heron-redux/latest -f Dockerfile.dev ."
+# Do not forget dot at end for current directory
+# then docker run -p 3000:3000 heron-redux
+
+# Docker volumes prevent need for rebuilds after code change
+# By providing a reference to code/app
+# meaning changes in code will reflect in docker container auto and continuously
+# Doing all this in linux subsystem to prevent volumes error on windows
+# run "explorer.exe ." in ubuntu for WSL file system gui
+
+# For volumes run "docker run -it -p 3000:3000 -v /home/node/app/node_modules -v ~/frontend:/home/node/app USERNAME:frontend"
+# the command means, -v for volume, then map container to node_modules in container
+# then -v with frontend followed by colon meaning map dir outside of container to app dir inside of container
+
+
+# To make volumne mapping shorter we can use docker compose

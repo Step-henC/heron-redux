@@ -10,7 +10,7 @@ const protocolsUrl = `${process.env.REACT_APP_PROTOCOL_LINK}`
       <p>This service parses a Sklyine CSV and performs calculations including averages, standard deviation and coefficient of variance. The results are visualized on screen with an option to download data in a csv and graphs in a PDF.</p>
       <div className='card-links'>   
         <a id='begin-q' href='/quant'>Begin Quantification</a>
-        <a id='learn-q'href='/quant'>Learn Quantification Here</a>
+        <a id='learn-q'href='/quant-tutorial'>Learn Quantification Here</a>
       </div>
      </div>
      <div className='card-info'>
@@ -18,7 +18,7 @@ const protocolsUrl = `${process.env.REACT_APP_PROTOCOL_LINK}`
       <p>Upload your Skyline file for data transformation. Transformed data is exported into an Excel file. The Excel file contains data separated on multiple sheets with graphs for visualization. Certain criteria for naming data is required.</p>
       <div className='card-links'>   
         <a id='begin-q' href='/glyco'>Begin Glycosylation</a>
-        <a id='learn-q'href='/glyco'>Learn Glycosylation Here</a>
+        <a id='learn-q'href='/glyco-tutorial'>Learn Glycosylation Here</a>
       </div>
      </div>
      <div className='card-info'>

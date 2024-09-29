@@ -1,6 +1,6 @@
 {
   "name": "heron-redux",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -35,7 +35,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "rsbuild dev --open",
+    "start": "rsbuild dev",
     "build": "rsbuild build",
     "test": "jest",
     "preview": "rsbuild preview",

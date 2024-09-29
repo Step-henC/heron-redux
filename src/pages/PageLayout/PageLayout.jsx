@@ -1,8 +1,7 @@
 import React, 
 {lazy, Suspense} 
 from 'react';
-import HomePage from '../HomePage/HomePage';
-import QuantFormPage from '../QuantFormPage/QuantFormPage';
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,11 +9,17 @@ import {
   Navigate,
 } from 'react-router-dom';
 import HeaderLayout from '../../components/HeaderLayout/HeaderLayout';
-import GlycoFormPage from '../GlycoFormPage/GlycoFormPage';
-import QuantChartsPage from '../QuantChartsPage/QuantChartsPage';
+import GlycoFormPage from '../Glyco/GlycoFormPage/GlycoFormPage';
+import QuantChartsPage from '../Quant/QuantChartsPage/QuantChartsPage';
+import HomePage from '../HomePage/HomePage';
+import QuantFormPage from '../Quant/QuantFormPage/QuantFormPage';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-import GlycoChartsPage from '../GlycoChartsPage/GlycoChartsPage';
+import GlycoChartsPage from '../Glyco/GlycoChartsPage/GlycoChartsPage';
+import QuantTutorialPage from '../Quant/QuantTutorialPage/QuantTutorialPage';
+import GlycoTutorial from '../Glyco/GlycoTutorial/GlycoTutorial';
+import ContactError from '../ContactPage/ContactError';
+import ContactSuccess from '../ContactPage/ContactSuccess';
 
 const ContactPage = lazy(() => import('../ContactPage/ContactPage'))
 export default function PageLayout() {
@@ -23,8 +28,9 @@ export default function PageLayout() {
       <HeaderLayout>
         <ErrorBoundary
           fallback={
-            <div>
-              Something went wrong. Please return <a href="/">home.</a> If the
+            <div className={'response-main'}>
+              <h4>Something went wrong.
+                </h4> Please return <a href="/">home.</a> If the
               problem continues, please <a href="/contact">contact us here.</a>
             </div>
           }
@@ -36,6 +42,12 @@ export default function PageLayout() {
             <Route path="/contact" element={<Suspense fallback={<LoadingSpinner />} ><ContactPage /></Suspense>} />
             <Route exact path="/quant/charts" element={<QuantChartsPage />} />
             <Route exact path='/glyco/charts' element={<GlycoChartsPage />} />
+            <Route exact path="/quant-tutorial" element={<QuantTutorialPage />} />
+            <Route exact path="/glyco-tutorial" element={<GlycoTutorial />} />
+            <Route exact path="/contact/error" element={<ContactError />} />
+            <Route exact path="/contact/success" element={<ContactSuccess />} />
+
+
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </ErrorBoundary>
