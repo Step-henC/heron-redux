@@ -8,7 +8,7 @@ import QuantPage from './QuantFormPage';
 import userEvent from '@testing-library/user-event';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import quantformSlice, { setFileData, setQuantForm, setReplicateNumber } from '../../redux/quantformSlice';
+import quantformSlice, { setFileData, setQuantForm, setReplicateNumber } from '../../../redux/quantformSlice';
 
 const mockUseNavigate = jest.fn();
 

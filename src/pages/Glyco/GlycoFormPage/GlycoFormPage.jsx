@@ -7,11 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import { uniqueId, isEmpty } from 'lodash';
 import {
   ACCEPTABLE_GLYCO_FORMATS,
-} from '../../utils/acceptablefileformat';
+} from '../../../utils/acceptablefileformat';
 import './glycopage.css'
-import { resetGlycoForm, setFileData, setIsFormFilled } from '../../redux/glycoFormSlice';
+import { resetGlycoForm, setFileData, setIsFormFilled } from '../../../redux/glycoFormSlice';
 import {validateGlycoFile} from './glycoPageUtils'
-import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
+import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner'
 export default function GlycoFormPage() {
   const [isAcceptableFormat, setIsAcceptableFormat] = useState(true);
   const [isFileProcessedSuccess, setIsFileProcessedSuccess] = useState(true);

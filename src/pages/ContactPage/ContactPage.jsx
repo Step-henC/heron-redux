@@ -1,31 +1,40 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { EMAIL_PATTERN } from "../../utils/acceptablefileformat";
-import emailjs from "@emailjs/browser";
-import "./contact.css";
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { EMAIL_PATTERN } from '../../utils/acceptablefileformat';
+import emailjs from '@emailjs/browser';
+import './contact.css';
+import { useDispatch } from 'react-redux';
+import {
+  resetContactForm,
+  setFormIsFilled,
+} from '../../redux/contactFormSlice';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
 export default function ContactPage() {
-  
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [emailValid, setEmailValid] = useState(true);
 
-  const [subject, setSubject] = useState("");
+  const [subject, setSubject] = useState('');
   const [subjValid, setSubjValid] = useState(true); //subject does not match \s regex (white spaces)
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [messageValid, setMessageValid] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const formRef = useRef();
 
   let navigate = useNavigate();
 
   const handleCancel = () => {
-    navigate("/");
+    dispatch(resetContactForm());
+    navigate('/');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     //emailjs stuff here
+    setIsLoading(true)
 
     if (
       subject.match(/^\S/g) &&
@@ -34,22 +43,34 @@ export default function ContactPage() {
       message.match(/^\S/g) &&
       email.match(EMAIL_PATTERN)
     ) {
+      dispatch(setFormIsFilled({ bool: true }));
       //emailjs stuff here
-console.log('hey')
       emailjs
-        .sendForm(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, formRef.current, {
-          publicKey: process.env.REACT_APP_PUBLIC_KEY,
-        })
-        .then(() => navigate("/contact/success"))
-        .catch((err) => {console.log(err); navigate("/contact/error")});
+        .sendForm(
+          process.env.REACT_APP_SERVICE_ID,
+          process.env.REACT_APP_TEMPLATE_ID,
+          formRef.current,
+          {
+            publicKey: process.env.REACT_APP_PUBLIC_KEY,
+          }
+        )
+        .then(() => navigate('/contact/success'))
+        .catch((err) => {
+          console.log(err);
+          navigate('/contact/error');
+        });
     } else {
       setSubjValid(subject.match(/^\S/g) && subject.length > 0);
       setMessageValid(message.length >= 5 && message.match(/^\S/g));
       setEmailValid(email.match(EMAIL_PATTERN));
+      setIsLoading(false)
     }
   };
 
   return (
+    <>
+      {isLoading && <LoadingSpinner />}
+
       <form
         onSubmit={handleSubmit}
         ref={formRef}
@@ -75,7 +96,7 @@ console.log('hey')
             <li className="form-col">
               <p
                 aria-label="Please provide a valid email"
-                style={{ color: "red" }}
+                style={{ color: 'red' }}
               >
                 Error: Please provide a valid email
               </p>
@@ -100,9 +121,9 @@ console.log('hey')
           {!subjValid && (
             <li className="form-col">
               <p
-              data-testid='subject-err'
+                data-testid="subject-err"
                 aria-label="Please provide a valid subject"
-                style={{ color: "red" }}
+                style={{ color: 'red' }}
               >
                 Error: Please provide a valid subject. Must be at least 1
                 characters and begin with a non-whitespace character
@@ -121,8 +142,8 @@ console.log('hey')
               name="message"
               className={
                 messageValid
-                  ? "message-input-class"
-                  : "message-input-class-error"
+                  ? 'message-input-class'
+                  : 'message-input-class-error'
               }
               maxLength={1000}
               minLength={5}
@@ -136,9 +157,9 @@ console.log('hey')
           {!messageValid && (
             <li className="form-col">
               <p
-              data-testid='message-err'
+                data-testid="message-err"
                 aria-label="Please provide a valid message. Must be at least 5 chararcters and begin with non-whitespace character"
-                style={{ color: "red" }}
+                style={{ color: 'red' }}
               >
                 Error: Please provide a valid message. Must be at least 5
                 characters and begin with a non-whitespace character
@@ -148,8 +169,7 @@ console.log('hey')
 
           <li className="form-row-spacer">
             <button
-                        data-testid='contact-cancel'
-
+              data-testid="contact-cancel"
               className="button-button-cancel"
               aria-label="cancel"
               onClick={handleCancel}
@@ -157,7 +177,7 @@ console.log('hey')
               Cancel
             </button>
             <button
-            data-testid='contact-submit'
+              data-testid="contact-submit"
               className="button-button-submit"
               aria-label="submit"
               onClick={handleSubmit}
@@ -168,5 +188,6 @@ console.log('hey')
           </li>
         </ul>
       </form>
+    </>
   );
 }

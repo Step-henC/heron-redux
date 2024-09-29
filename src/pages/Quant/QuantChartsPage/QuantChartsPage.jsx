@@ -1,11 +1,11 @@
-import CustomDataTable from '../../components/DataTable/DataTable';
+import CustomDataTable from '../../../components/DataTable/DataTable';
 import { useSelector } from 'react-redux';
-import { quantMapper } from '../../mappers/quant-mapper';
-import AveragesTable from '../../components/AveragesTable/AveragesTable';
-import LineCharts from '../../components/LineCharts/LineCharts';
+import { quantMapper } from '../../../mappers/quant-mapper';
+import AveragesTable from '../../../components/AveragesTable/AveragesTable';
+import LineCharts from '../../../components/LineCharts/LineCharts';
 import { uniqueId, isEmpty } from 'lodash';
 import { loadWorker } from './worker/worker-helper';
-import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
+import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner'
 import starterWorker from './worker/worker';
 
 import { useRef, useState, useEffect, useTransition } from 'react';

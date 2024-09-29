@@ -1,5 +1,5 @@
 import { isArray, isEqual } from "lodash";
-import { EXPECTED_FIELD_NAMES } from "../../utils/acceptablefileformat";
+import { EXPECTED_FIELD_NAMES } from "../../../utils/acceptablefileformat";
 export const validateQuantFile = (fileDataJsonArray, successCallBack, errorCallback) => {
  
   if (!isArray(fileDataJsonArray)  || !fileDataJsonArray ){

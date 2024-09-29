@@ -12,8 +12,8 @@ export default function Header() {
       label: 'Protocol Publication',
       url: `${process.env.REACT_APP_PROTOCOL_LINK}`,
     },
-    { label: 'Quantification Tutorial', url: '/quant' },
-    { label: 'Glycosylation Tutorial', url: '/glyco' },
+    { label: 'Quantification Tutorial', url: '/quant-tutorial' },
+    { label: 'Glycosylation Tutorial', url: '/glyco-tutorial' },
   ];
 
   const windowResizeAddCanvasButton = () => {

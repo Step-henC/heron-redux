@@ -7,7 +7,7 @@ import {
   ACCEPTABLE_FILE_FORMATS,
   BAD_LIST_PATTERN,
   BAD_RUNS_PLACEHOLDER,
-} from '../../utils/acceptablefileformat';
+} from '../../../utils/acceptablefileformat';
 import './quantformpage.css';
 import {
   convertBadSamplesToOutlierList,
@@ -19,9 +19,9 @@ import {
   setFileData,
   setOutlierSamples,
   setReplicateNumber,
-} from '../../redux/quantformSlice';
-import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
+} from '../../../redux/quantformSlice';
+import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
+import ToggleSwitch from '../../../components/ToggleSwitch/ToggleSwitch';
 export default function QuantFormPage() {
   const [isAcceptableFormat, setIsAcceptableFormat] = useState(true);
   const [isFileProcessedSuccess, setIsFileProcessedSuccess] = useState(true);

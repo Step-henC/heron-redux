@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import GlycoDataTable from "../../components/GlycoDataTable/GlycoDataTable";
-import { parseFileDataInts } from "../../mappers/glyco-mapper";
+import GlycoDataTable from "../../../components/GlycoDataTable/GlycoDataTable";
+import { parseFileDataInts } from "../../../mappers/glyco-mapper";
 
 
 export default function GlycoChartsPage() {

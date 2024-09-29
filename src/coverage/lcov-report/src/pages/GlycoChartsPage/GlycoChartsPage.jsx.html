@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
@@ -99,7 +99,12 @@
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -109,6 +114,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -123,8 +130,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -140,35 +150,40 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GlycoDataTable from "../../components/GlycoDataTable/GlycoDataTable";
+import { parseFileDataInts } from "../../mappers/glyco-mapper";
 &nbsp;
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >GlycoChartsPage() {</span>
 &nbsp;
 &nbsp;
   const [isTableProgressPending, setIsTableProgressPending] = <span class="cstat-no" title="statement not covered" >useState(true);</span>
+  const [tableData, setTableData] = <span class="cstat-no" title="statement not covered" >useState([])</span>
   let navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
   const glycoFormData = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; <span class="cstat-no" title="statement not covered" >state.glycoform)</span></span>
 &nbsp;
+  const settingTableData = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(f</span>ile) =&gt; {</span>
+    // no need fo start transition since computation is light load
+<span class="cstat-no" title="statement not covered" >    setTableData(parseFileDataInts(file))</span>
+  }
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if(glycoFormData.isFormFilled === false){</span>
+<span class="cstat-no" title="statement not covered" >    if(glycoFormData?.isFormFilled === false){</span>
       // since glyco data does not persist, this will re-navigate every refresh. 
       // its fine because this export is with an api call
 <span class="cstat-no" title="statement not covered" >      navigate('/glyco');</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
     } else {
+<span class="cstat-no" title="statement not covered" >      settingTableData(glycoFormData?.fileData)</span>
 <span class="cstat-no" title="statement not covered" >      setIsTableProgressPending(false)</span>
     }
 &nbsp;
   }, [glycoFormData])
 &nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
   return (
     &lt;&gt;
    {isTableProgressPending &amp;&amp; &lt;LoadingSpinner /&gt; }
-    &lt;GlycoDataTable tableData={glycoFormData.fileData} progressPending={isTableProgressPending}/&gt;
+    &lt;GlycoDataTable tableData={tableData} progressPending={isTableProgressPending}/&gt;
     &lt;/&gt;
   )
 }</pre></td></tr></table></pre>
@@ -178,7 +193,7 @@ export default function <span class="fstat-no" title="function not covered" >Gly
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-26T13:24:28.705Z
+                at 2024-09-29T12:56:25.689Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
