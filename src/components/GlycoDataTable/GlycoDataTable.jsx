@@ -4,12 +4,15 @@ import ExportButton from '../ExportButton/ExportButton';
 import { exportExcel } from './glycoTableUtils';
 import GlycoDataTableSubheader from './GlycoDataTableSubheader';
 import './glycodatatable.css';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 const GlycoDataTable = memo(function GlycoDataTable({
   tableData,
   progressPending,
 }) {
   const [selectedCol, setSelectedCol] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+  const [isExportError, setIsExportError] = useState(false)
 
   const paginationComponentOptions = {
     selectAllRowsItem: true,
@@ -86,11 +89,14 @@ const GlycoDataTable = memo(function GlycoDataTable({
 
   return (
     <>
+    {isExportError && <div className='glyco-export-err'>Something went wrong with your export request. Please try again later or <a href='/contact'> contact us  here.</a></div>}
+    {isButtonDisabled && <LoadingSpinner />}
       <div className={'group-buttons-div'}>
         <GlycoDataTableSubheader selectFunction={(e) => setSelectedCol(e)} />
         <ExportButton
           buttonText={'Export Excel'}
-          onExport={() => exportExcel(tableData)}
+          onExport={() => {exportExcel(tableData, ()=> setIsButtonDisabled(false), () => {setIsButtonDisabled(false);setIsExportError(true)}); setIsButtonDisabled(true) }}
+          disabled={isButtonDisabled}
         />
       </div>
       <DataTable

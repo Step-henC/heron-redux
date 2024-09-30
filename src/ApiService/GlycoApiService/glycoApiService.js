@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 
-export const getGlycoDataExcel = (data) => {
+export const getGlycoDataExcel = (data, onSuccess, onError) => {
 
   axios({
     url: `${process.env.REACT_APP_GLYCO_API}`,
@@ -22,7 +22,9 @@ export const getGlycoDataExcel = (data) => {
       // clean up "a" element & remove ObjectURL
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
+      onSuccess()
   }).catch((err) => {
     console.log(err)
+    onError()
   })
 }
