@@ -8,7 +8,7 @@ on:
 env:
   DOCKER_HUB_USERNAME: ${{secrets.DOCKER_USERNAME}}
   DOCKER_KEY: ${{secrets.DOCKERHUB_KEY}}
-  IMAGE_NAME: hash
+  IMAGE_NAME: heron-ui
 
 jobs:
   build-and-deploy:
