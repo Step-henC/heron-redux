@@ -1,0 +1,31 @@
+name: CICD
+
+on:
+  push:
+    branches:
+      - aws-eks
+
+env:
+  DOCKER_HUB_USERNAME: ${{secrets.DOCKER_USERNAME}}
+  DOCKER_KEY: ${{secrets.DOCKERHUB_KEY}}
+  IMAGE_NAME: hash
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{env.DOCKER_HUB_USERNAME}}
+          password: ${{env.DOCKER_KEY}}
+
+      - name: Build Docker Image
+        run: docker build -t ${{env.DOCKER_HUB_USERNAME}}/${{env.IMAGE_NAME}}:${{github.sha}} -f Dockerfile.dev .
+
+      - name: Push Docker Image
+        run: docker push ${{env.DOCKER_HUB_USERNAME}}/${{env.IMAGE_NAME}}:${{github.sha}}
