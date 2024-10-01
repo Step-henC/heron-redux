@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "heron-helm.fullname" . }}-test-connection"
+  labels:
+    {{- include "heron-helm.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "heron-helm.fullname" . }}:80']
+  restartPolicy: Never
