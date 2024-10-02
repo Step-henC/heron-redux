@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - heron-minikube
+      - main
 
 env:
   DOCKER_HUB_USERNAME: ${{secrets.DOCKER_USERNAME}}
@@ -25,7 +26,7 @@ jobs:
           password: ${{env.DOCKER_KEY}}
 
       - name: Build Docker Image
-        run: docker build -t ${{env.DOCKER_HUB_USERNAME}}/${{env.IMAGE_NAME}}:${{github.sha}} -f Dockerfile.dev .
+        run: docker build -t ${{env.DOCKER_HUB_USERNAME}}/${{env.IMAGE_NAME}}:${{github.sha}} .
 
       - name: Push Docker Image
         run: docker push ${{env.DOCKER_HUB_USERNAME}}/${{env.IMAGE_NAME}}:${{github.sha}}

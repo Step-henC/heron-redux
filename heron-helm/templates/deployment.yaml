@@ -18,7 +18,7 @@ spec:
                 - name: heron-redux
                   image: stephenc0821/heron-mini:{{ .Values.env.MINIKUBE_VERSION }}
                   ports:
-                    - containerPort: 3000
+                    - containerPort: 80
                   env:
                   - name: REACT_APP_SERVICE_ID
                     value: Changeme
