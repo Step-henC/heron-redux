@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: heron-api-service
+  labels:
+    app: heron-api-server
+spec:
+  type: ClusterIP
+  selector:
+    app: heron-api-server
+  ports:
+    - port: 8000
+      targetPort: {{ .Values.service.port }}
+      protocol: TCP

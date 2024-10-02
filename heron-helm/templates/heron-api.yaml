@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: heron-api-server
+    labels:
+      app: heron-api-server
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: heron-api-server
+    template:
+        metadata:
+            labels:
+                app: heron-api-server
+        spec:
+            containers:
+                - name: heron-api-server
+                  image: stephenc0821/heron-api-server:{{ .Values.env.SERVER_VERSION }}
+                  ports:
+                    - containerPort: {{ .Values.service.port }}
+                  readinessProbe:
+                    httpGet:
+                        path: /api/glyco/excel
+                        port: {{ .Values.service.port }}
+                    initialDelaySeconds: 50
+                    periodSeconds: 10
+                    successThreshold: 1
+                    failureThreshold: 3
+                  livenessProbe:
+                    httpGet:
+                        path: /api/glyco/excel
+                        port: {{ .Values.service.port }}
+                    initialDelaySeconds: 50
+                    periodSeconds: 10
+                    timeoutSeconds: 5
+                    successThreshold: 1
+                    failureThreshold: 3
