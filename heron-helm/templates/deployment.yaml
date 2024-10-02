@@ -16,7 +16,7 @@ spec:
         spec:
             containers:
                 - name: heron-redux
-                  image: stephenc0821/heron-ui:{{ .Values.env.APP_VERSION }}
+                  image: stephenc0821/heron-mini:{{ .Values.env.MINIKUBE_VERSION }}
                   ports:
                     - containerPort: 3000
                   env:
@@ -29,7 +29,7 @@ spec:
                   - name: REACT_APP_PROTOCOL_LINK
                     value: https://www.protocols.io/view/heron-data-suite-biomedical-quantitative-analysis-8epv5xwj5g1b/v1
                   - name: REACT_APP_GLYCO_API
-                    value: https://heronapiserverless.vercel.app/
+                    value: http://localhost:8000
                   readinessProbe:
                     httpGet:
                         path: /health
