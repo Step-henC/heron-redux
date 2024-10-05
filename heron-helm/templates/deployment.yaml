@@ -16,7 +16,7 @@ spec:
         spec:
             containers:
                 - name: heron-redux
-                  image: stephenc0821/heron-redux:{{ .Values.env.APP_VERSION }}
+                  image: stephenc0821/heron-ui:{{ .Values.env.APP_VERSION }}
                   ports:
                     - containerPort: 80
                   env:
