@@ -5,10 +5,10 @@ metadata:
   labels:
     app: heron-api-server
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: heron-api-server
   ports:
     - port: 8000
-      targetPort: {{ .Values.service.port }}
-      protocol: TCP
+      #targetPort: {{ .Values.service.port }}
+      #protocol: TCP

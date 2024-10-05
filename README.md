@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Heron Data UI 2.0
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a refactor of Heron Data [found here](https://github.com/Step-henC/heron-data-internet) 
 
-## Available Scripts
+Refactored to cleaner look-and-feel and better state management using redux and redux persist. Also improved developer experience with RsBuild as the bundler as opposed to webpack, for RsBuild's faster build times. Refactor additionally, includes dynamic imports (code splitting) for faster web page load times. This refactor removed the heavy, React Bootstrap 5 Library to reduce total blocking time (TBT) by 50% (800 ms to 300ms) to allow users quicker time to interact with code. 
 
-In the project directory, you can run:
+Refactor also includes Web Workers for better performance and component memoization to prevent expensive re-renders.
 
-### `npm start`
+However, despite refactor, website functions the same from the user's perspective. Added loading spinners for better user experience and to compensate for the lazy loading.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# How To Run Locally
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Docker 
+    There is a docker for development and production environment in AWS EKS. 
+    To run docker, open cmd line and run `docker build -t heron-redux:local -f Dockerfile.dev .` 
+    Then, run `docker run -p 3000:3000 heron-redux:local` and open browser to `localhost:3000`
 
-### `npm test`
+    If you want to run the production Dockerfile, enter `docker build -t heron-redux:local .` and then `docker run -p 3000:80 heron-redux:local`
+     and open browser to `localhost:3000`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## NPM 
+  If npm is installed, go to root directory and run `npm start -- --open`
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# K8s and Helm
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Make sure you have helm installed locally. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Ideally, helm would be ran with Dockerfile.dev for the environment variables to be updated in the helm chart and not the production docker container. SO that the front and backend services can communicate in a local configuration.
 
-### `npm run eject`
+To run local k8s setup, go to heron-helm directory, `cd heron-helm`
+and do `helm install heron-helm .`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+To check if install was successful, you can execute `kubectl get pods`
+and `kubectl get svc`. It may take a few a seconds to see services start. 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Depending on if using minikube, you can do `minikube service heron-service` for frontend to open in browser and open dashboard to check pod health, running `minikube dashboard`. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+For front and backend to communicate, /etc/hosts file will have to be updated to minikube ip to resolve hostnames. 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Deployment Architecture
 
-## Learn More
+This branch runs on Vercel. Backend code for glyco Excel chart export occurs on 
+Vercel Serverless functions in [this code base here](https://github.com/Step-henC/heron_api_serverless). 
+The endpoint for this code is https://main-domain/
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Whereas endpoint for [dockerized backend server here](https://github.com/Step-henC/heron_api_server)
+is http://main-domain/api/glyco/excel

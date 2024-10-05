@@ -10,7 +10,7 @@ spec:
     app: heron-redux
   ports:
     - port: 3000
-      targetPort: 3000
+      targetPort: 80
       #protocol: TCP
       #nodePort: 30080
       #name: http
