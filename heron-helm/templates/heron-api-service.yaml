@@ -5,7 +5,7 @@ metadata:
   labels:
     app: heron-api-server
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: heron-api-server
   ports:
