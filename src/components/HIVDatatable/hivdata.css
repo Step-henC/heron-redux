@@ -1,0 +1,21 @@
+.group-buttons-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding-right: 40px;
+  padding-top: 30px;
+}
+
+.group-buttons-div > * {
+  margin: 0 4px 0 4px;
+}
+
+.hiv-export-err{
+  color: red;
+  align-self: center;
+  padding-left: 10%;
+  padding-top: 10px;
+  width: 100%;
+}

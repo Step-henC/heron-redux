@@ -14,6 +14,7 @@ import appSlice from './redux/appSlice';
 import quantformSlice from './redux/quantformSlice';
 import glycoFormSlice from './redux/glycoFormSlice';
 import contactFormSlice from './redux/contactFormSlice';
+import hivFormSlice from './redux/hivFormSlice'
 
 const persistConfig = {
   key: 'heron-file',
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   app: appSlice,
   quantform: quantformSlice,
   glycoform: glycoFormSlice,
+  hivForm: hivFormSlice,
   contactForm: contactFormSlice,
 });
 

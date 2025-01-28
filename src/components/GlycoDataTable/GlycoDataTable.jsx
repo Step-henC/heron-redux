@@ -95,7 +95,7 @@ const GlycoDataTable = memo(function GlycoDataTable({
         <GlycoDataTableSubheader selectFunction={(e) => setSelectedCol(e)} />
         <ExportButton
           buttonText={'Export Excel'}
-          onExport={() => {exportExcel(tableData, ()=> setIsButtonDisabled(false), () => {setIsButtonDisabled(false);setIsExportError(true)}); setIsButtonDisabled(true) }}
+          onExport={() => {exportExcel(tableData, ()=> {setIsButtonDisabled(false); setIsExportError(false)}, () => {setIsButtonDisabled(false);setIsExportError(true)}); setIsButtonDisabled(true) }}
           disabled={isButtonDisabled}
         />
       </div>

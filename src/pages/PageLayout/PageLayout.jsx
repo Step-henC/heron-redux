@@ -20,6 +20,8 @@ import QuantTutorialPage from '../Quant/QuantTutorialPage/QuantTutorialPage';
 import GlycoTutorial from '../Glyco/GlycoTutorial/GlycoTutorial';
 import ContactError from '../ContactPage/ContactError';
 import ContactSuccess from '../ContactPage/ContactSuccess';
+import HIVFormPage from '../HIV/HIVFormPage';
+import HIVChartsPage from '../HIV/HIVCharts/HIVChartsPage';
 
 const ContactPage = lazy(() => import('../ContactPage/ContactPage'))
 export default function PageLayout() {
@@ -39,15 +41,15 @@ export default function PageLayout() {
             <Route exact path="/" element={<HomePage />} />
             <Route path="/quant" element={<QuantFormPage />} />
             <Route path="/glyco" element={<GlycoFormPage />} />
+            <Route path="/hiv" element={<HIVFormPage />} />
             <Route path="/contact" element={<Suspense fallback={<LoadingSpinner />} ><ContactPage /></Suspense>} />
             <Route exact path="/quant/charts" element={<QuantChartsPage />} />
             <Route exact path='/glyco/charts' element={<GlycoChartsPage />} />
+            <Route exact path='/hiv/charts' element={<HIVChartsPage />} />
             <Route exact path="/quant-tutorial" element={<QuantTutorialPage />} />
             <Route exact path="/glyco-tutorial" element={<GlycoTutorial />} />
             <Route exact path="/contact/error" element={<ContactError />} />
             <Route exact path="/contact/success" element={<ContactSuccess />} />
-
-
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </ErrorBoundary>

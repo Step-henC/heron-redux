@@ -35,6 +35,8 @@ export default function GlycoChartsPage() {
 
   return (
     <>
+  <div style={{marginTop: '10px', display: 'flex', justifyContent: "center", width: "100%"}}><h2>Glycosylation Chart</h2></div>
+
    {isTableProgressPending && <LoadingSpinner /> }
     <GlycoDataTable tableData={tableData} progressPending={isTableProgressPending}/>
     </>

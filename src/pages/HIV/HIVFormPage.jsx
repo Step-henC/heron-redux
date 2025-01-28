@@ -2,34 +2,32 @@
 
 import { useEffect, useState, useTransition } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Papa from 'papaparse';
 import { useNavigate } from 'react-router-dom';
 import { uniqueId, isEmpty } from 'lodash';
-import {
-  ACCEPTABLE_GLYCO_FORMATS,
-} from '../../../utils/acceptablefileformat';
-import './glycopage.css'
-import { resetGlycoForm, setFileData, setIsFormFilled } from '../../../redux/glycoFormSlice';
-import {validateGlycoFile} from './glycoPageUtils'
-import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner'
-export default function GlycoFormPage() {
+import { ACCEPTABLE_GLYCO_FORMATS } from '../../utils/acceptablefileformat'; //HIV has same format as Glyco
+import { resetHivForm, setFileData, setIsFormFilled } from '../../redux/hivFormSlice';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import './hiv.css'
+import readXlsxFile, { readSheetNames } from 'read-excel-file';
+
+export default function HIVFormPage() {
   const [isAcceptableFormat, setIsAcceptableFormat] = useState(true);
   const [isFileProcessedSuccess, setIsFileProcessedSuccess] = useState(true);
   const [inputKey, setInputKey] = useState(Date.now);
   const [noFileMessage, setNoFileMessage] = useState(false);
   const [isAnalyzeButtonDisabled, setIsAnalyzeButtonDisabled] = useState(false);
   const [isFormParsePending, startFormParseTransition] = useTransition();
-  const glycoFormData = useSelector((state) => state.glycoform)
+  const hivFormData = useSelector((state) => state.hivForm)
 
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const successValidateCallback = (fileData) => {
-    dispatch(setFileData(fileData));
     setIsFileProcessedSuccess(true)
     setIsAcceptableFormat(true)
     setNoFileMessage(false)
+    dispatch(setFileData(fileData))
   }
 
   const dataIsValidNavigateToCharts = () => {
@@ -38,81 +36,72 @@ export default function GlycoFormPage() {
     // reset file input
     setInputKey(uniqueId);
     dispatch(setIsFormFilled({bool: true}))
-    navigate(`/glyco/charts`);
+    navigate(`/hiv/charts`);
   };
 
   const errorValidateCallBack = () => {
-    dispatch(resetGlycoForm())
+    dispatch(resetHivForm())
     setIsFileProcessedSuccess(false);
+    setInputKey(uniqueId)
   };
 
-  const parseError = () => {
-    setIsFileProcessedSuccess(false)
-    setNoFileMessage(true)
-    dispatch(resetGlycoForm())
-    setInputKey(uniqueId)
-  }
-
-  const handleFile = (e) => {
+  const handleFile = async (e) => {
     const uploadedFile = e.target.files[0];
     if (uploadedFile === undefined){
-      dispatch(resetGlycoForm())
+      errorValidateCallBack()
       return;
     }
 
-    if (uploadedFile && !ACCEPTABLE_GLYCO_FORMATS.includes(uploadedFile.type)) {
-        setIsAcceptableFormat(false);
-        setInputKey(uniqueId)
+    if (!ACCEPTABLE_GLYCO_FORMATS.includes(uploadedFile.type)) {
+      errorValidateCallBack()
         return;
-      } else {
-        setIsAcceptableFormat(true);
-      }
+      } 
 
+      const sheetNames = await readSheetNames(uploadedFile)
+      // i do not have any other identifiers other than sheet count
+      // if no sheet count, probably not the form we are looking for
+      if (sheetNames.length !== 3) {
+        errorValidateCallBack()
+        return;
+      } 
+    
+      startFormParseTransition(async () => {
+      //add protein names from sheet one
+      const proteinData = await readXlsxFile(uploadedFile, {sheet: 1})
+      // add peptide names only from sheet two. So we can merge. 
+      // all other vals should be same
+       const peptideData = await readXlsxFile(uploadedFile, {sheet: 2})
 
-
-      startFormParseTransition(() => {
-        Papa.parse(uploadedFile, {
-          header: true,
-          skipEmptyLines: true,
-          error: () => parseError(),
-          complete: (results) => validateGlycoFile(
-            results.data,
-            (data) => successValidateCallback(data),
-            () => errorValidateCallBack()
-          )
-        })
-
+       // Now protein is first val in row, and peptide name is last val in row
+      const fileRows = proteinData.map((row, idx) => [...row, peptideData[idx][0]])
+      successValidateCallback(fileRows)
+      
       })
-
- 
-        //https://medium.com/how-to-react/how-to-parse-or-read-csv-files-in-reactjs-81e8ee4870b0
-
   };
 
   const handleAnalyze = (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-
-    if (isEmpty(glycoFormData.fileData)) {
-      setNoFileMessage(true);
-      
+    if (isEmpty(hivFormData?.fileData)) {
+      errorValidateCallBack()
       return;
     }
 
     // final check then navigate
     if (isAcceptableFormat && isFileProcessedSuccess && !noFileMessage) {
+    
         dataIsValidNavigateToCharts()
     }
   };
 
   const handleCancel = () => {
-    dispatch(resetGlycoForm());
+    dispatch(resetHivForm());
     navigate('/');
   };
 
   useEffect(() => {
-    dispatch(resetGlycoForm());
+    dispatch(resetHivForm());
 
     return () => {
       setInputKey(uniqueId)
@@ -120,13 +109,13 @@ export default function GlycoFormPage() {
   }, [])
 
   return (
-    <div className='glyco-main'>
+    <div className='hiv-main'>
    {(isAnalyzeButtonDisabled || isFormParsePending) && <LoadingSpinner />}
-   <h1 className='glyco-hd'>Glycosylation</h1>
+   <h1 className='hiv-hd'>HIV</h1>
     <form id="csv-elem" aria-label="form to upload and submit csv">
       <ul className="wrapper">
         <li className="form-row-title">
-          <h2>Upload Skyline File</h2>
+          <h2>Upload CSV File</h2>
         </li>
         <li className="form-row">
           <label htmlFor="file-input">Upload File</label>
@@ -183,7 +172,7 @@ export default function GlycoFormPage() {
             className="button-button-submit"
             aria-label="submit"
             onClick={handleAnalyze}
-            disabled={isAnalyzeButtonDisabled}
+            disabled={isAnalyzeButtonDisabled || isFormParsePending}
             type="submit"
           >
             Analyze

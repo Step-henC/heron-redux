@@ -1,5 +1,7 @@
 import { isArray, isEmpty, isEqual } from "lodash"
 import { EXPECTED_GLYCO_FIELDS } from "../../../utils/acceptablefileformat";
+
+
 export const validateGlycoFile = (file, successCallback, errorCallBack) => {
 
 if (isEmpty(file) || !file) {

@@ -60,7 +60,10 @@ export default function Header() {
         <a className="gly-lk" href="/glyco">
           Glycosylation
         </a>
-        <a className="gly-lk" href="/contact">
+        <a className="gly-lk" href="/hiv">
+          HIV
+        </a>
+        <a className="gly-lk" href="/hiv">
           Contact
         </a>
         <Dropdown title={'Documentation'} items={dropdownItems} />
@@ -91,6 +94,9 @@ export default function Header() {
             </li>
             <li className="list-link1">
               <a href="/glyco">Glycosylation</a>
+            </li>
+            <li className="list-link1">
+              <a href="/hiv">HIV</a>
             </li>
             <li className="list-link1">
               <a href="/contact">Contact</a>
